@@ -3,6 +3,7 @@ import signale from "signale"
 import dotenv from 'dotenv'
 dotenv.config()
 
+// Connect to mongo db with connection string 
 const connectionString = process.env.MONGO_URI
 
 try{
