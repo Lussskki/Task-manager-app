@@ -1,4 +1,4 @@
-// In a new file (e.g., infoSchema.js)
+// Inputed data schema from frontend
 import mongoose from 'mongoose'
 
 const infoSchema = new mongoose.Schema({
