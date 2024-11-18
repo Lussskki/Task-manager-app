@@ -18,10 +18,10 @@ const app = express()
 app.use(bodyParser.json())
 
 // Use the routes
-app.use('/', firstrouter)
-app.use('/', secondRouter)
-app.use('/', thirdRouter)
-app.use('/', protectedRouter)
+app.use('/api', firstrouter)
+app.use('/api', secondRouter)
+app.use('/api', thirdRouter)
+app.use('/api', protectedRouter)
 
 app.listen('3000', () => {
     signale.success('Server running on port 3000')
