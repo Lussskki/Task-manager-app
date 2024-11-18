@@ -1,8 +1,9 @@
-import UserSchema from '../db/schema/schema.js'
+import UserSchema from '../db/schema/userSchema.js'
+
 import express from 'express'
+
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import signale from 'signale'
 import dotenv from 'dotenv'
 dotenv.config()
 
@@ -10,7 +11,7 @@ const secondRouter = express.Router()
 
 const jwtSecret = process.env.SECRET  // It's stored securely using dotenv
 
-// Login route
+// Login router
 secondRouter.post('/login', async (req, res) => {
     const { email, password } = req.body
 
@@ -39,11 +40,9 @@ secondRouter.post('/login', async (req, res) => {
         const token = jwt.sign({ userId: user._id }, jwtSecret, { expiresIn: '1Hr' })
 
         // Send token to client and log success message
-        res.status(200).json({ message: `Login successful`, token })
-        return signale.success(`Successfully logged in`)  
+        return res.status(200).json({ message: `Login successful`, token })
     } catch (err) {
         // Error handling
-        signale.error('Error during login: ', err)
         return res.status(500).json({ message: `Error during login`, err })
     }
 })
