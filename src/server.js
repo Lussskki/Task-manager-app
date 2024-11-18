@@ -1,5 +1,5 @@
 import './db/connectMongo.js'
-import './db/schema/schema.js'
+import './db/schema/userSchema.js'
 
 import express from 'express'
 import signale from 'signale'
