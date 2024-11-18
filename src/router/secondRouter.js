@@ -3,13 +3,13 @@ import UserSchema from '../db/schema/userSchema.js'
 import express from 'express'
 
 import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
+import { generateToken } from '../utils/jwtUtils.js'
 import dotenv from 'dotenv'
 dotenv.config()
 
 const secondRouter = express.Router()
 
-const jwtSecret = process.env.SECRET  // It's stored securely using dotenv
+
 
 // Login router
 secondRouter.post('/login', async (req, res) => {
@@ -37,7 +37,7 @@ secondRouter.post('/login', async (req, res) => {
         }
 
         // Generate JWT token
-        const token = jwt.sign({ userId: user._id }, jwtSecret, { expiresIn: '1Hr' })
+        const token = generateToken(user._id)
 
         // Send token to client and log success message
         return res.status(200).json({ message: `Login successful`, token })
