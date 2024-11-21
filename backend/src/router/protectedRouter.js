@@ -1,33 +1,73 @@
-import express from 'express'
+import express from 'express';
+import authMiddleware from '../middleware/authMiddleware.js';
+import Info from '../db/schema/infoSchema.js';  // Import Info model
+import UserSchema from '../db/schema/userSchema.js';  // Import User model
 
-import authMiddleware from '../middleware/authMiddleware.js'
 
-import UserSchema from '../db/schema/userSchema.js'
+const protectedRouter = express.Router();
 
-const protectedRouter = express.Router()
+// GET /profile - Fetch user profile
 
-protectedRouter.get('/profile', authMiddleware, async (req, res) => {
+// protectedRouter.get('/userProfile', authMiddleware, async (req, res) => {
+//     try {
+//         const userId = req.user.userId;  // Extract userId from the token
+//         const user = await UserSchema.findById(userId).select('-password');  // Exclude password
+//         if (!user) {
+//             return res.status(404).json({ message: 'User not found' });
+//         }
+        
+//         console.log(user)
+//         res.status(200).json({ message: 'Profile fetched successfully', user });
+//     } catch (error) {
+//         res.status(500).json({ message: 'Error fetching profile data', error });
+//     }
+// });
 
-    try{
-        // Get userId from the decoded token
+// GET /tasks (or /data) - Fetch inputted data for the authenticated user
+protectedRouter.get('/data', authMiddleware, async (req, res) => {
+    try {
+        const userId = req.user.userId  // Extract userId from the token
+        const {infos} = req.params
+        const data = await Info.find({ infos });  // Fetch data from Info schema
+
+        // if (!data || data.length === 0) {
+        //     return res.status(404).json({ message: 'No data found for this user.' });
+        // }
+ 
+        res.status(200).json({ message: 'Data fetched successfully', data });
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching data', error });
+    }
+});
+
+// DELETE /:id
+protectedRouter.delete('/:id', authMiddleware, async (req, res) => {
+    try {
+        const { id } = req.params;  // Note the change: destructuring `id` instead of `_id`
         const userId = req.user.userId
 
-        // Find the user in the database, exclude the password field
-        const user = await UserSchema.findById(userId).select('-password')
+        const mongoDbData = await Info.findOneAndDelete({ _id: id, userId });
 
-        // If user not found, send 404 error
-        if (!user) {
-            return res.status(404).json({message: 'User not found'})
+        if (!mongoDbData) {
+            return res.status(404).json({ message: 'Task not found.' });
         }
 
-        // Send the user's profile data
-        res.status(200).json({message: 'Profile fetched successfuly', user})
-
-    }catch(error){
-        // Handle any errors and send a 500 response
-        res.status(500).json({message: 'Error fetching profile data', error})
-
+        res.status(200).json({ message: 'Task deleted successfully', deletedTask: mongoDbData });
+    } catch (error) {
+        console.error('Error deleting task:', error);
+        res.status(500).json({ message: 'Server error.' });
     }
-})
+});
 
-export default protectedRouter
+
+
+
+
+
+
+
+
+
+
+
+export default protectedRouter;
