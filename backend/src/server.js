@@ -1,28 +1,32 @@
-import './db/connectMongo.js'
-import './db/schema/userSchema.js'
+import express from 'express';
+import signale from 'signale';
+import './db/connectMongo.js';  // MongoDB connection
+import firstrouter from './router/firstRouter.js';
+import secondRouter from './router/secondRouter.js';
+import thirdRouter from './router/thirdRouter.js';
+import protectedRouter from './router/protectedRouter.js';
+import bodyParser from 'body-parser';
+import cors from 'cors';
 
-import express from 'express'
-import signale from 'signale'
+const app = express();
 
+// CORS setup to allow frontend to access the API
+app.use(cors({
+    origin: 'http://localhost:3001', // React app is running on port 3001
+    methods: ['GET', 'POST', 'DELETE'],  
+}));
 
-import firstrouter from './router/firstRouter.js'
-import secondRouter from './router/secondRouter.js'
-import thirdRouter from './router/thirdRouter.js'
-import protectedRouter from './router/protectedRouter.js'
+// Middleware for parsing JSON bodies
+app.use(bodyParser.json());
+app.use(express.json())
 
-import bodyParser from 'body-parser'
+// Use your defined routes
+app.use('/api/signup', firstrouter);
+app.use('/api/login', secondRouter);
+app.use('/api/addInfo', thirdRouter);
+app.use('/api/profile', protectedRouter);
 
-const app = express()
-
-// Use JSON parsing middleware
-app.use(bodyParser.json())
-
-// Use the routes
-app.use('/api', firstrouter)
-app.use('/api', secondRouter)
-app.use('/api', thirdRouter)
-app.use('/api', protectedRouter)
-
-app.listen('3000', () => {
-    signale.success('Server running on port 3000')
-})
+// Start the server
+app.listen(3000, () => {
+    signale.success('Server running on port 3000');
+});

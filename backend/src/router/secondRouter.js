@@ -6,13 +6,13 @@ import bcrypt from 'bcrypt'
 import { generateToken } from '../utils/jwtUtils.js'
 import dotenv from 'dotenv'
 dotenv.config()
-
+import mongoose from 'mongoose'
 const secondRouter = express.Router()
 
 
 
 // Login router
-secondRouter.post('/login', async (req, res) => {
+secondRouter.post('/', async (req, res) => {
     const { email, password } = req.body
 
     // Check email and password
@@ -47,4 +47,20 @@ secondRouter.post('/login', async (req, res) => {
     }
 })
 
+// // GET /tasks (or /data) - Fetch inputted data for the authenticated user
+// secondRouter.get('/data', async (req, res) => {
+//     try {
+//         const userId = req.user.userId  // Extract userId from the token
+//         const {infos} = req.params
+//         const data = await Info.find({ infos });  // Fetch data from Info schema
+
+//         if (!data || data.length === 0) {
+//             return res.status(404).json({ message: 'No data found for this user.' });
+//         }
+ 
+//         res.status(200).json({ message: 'Data fetched successfully', data });
+//     } catch (error) {
+//         res.status(500).json({ message: 'Error fetching data', error });
+//     }
+// });
 export default secondRouter

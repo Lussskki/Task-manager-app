@@ -15,8 +15,10 @@ const authMiddleware = (req, res, next) => {
     // Token is accessable
     try{
         const decoded = jwt.verify(token, process.env.SECRET)
-
+        
+        
         req.user = decoded
+        // console.log('Auth: User from token:', req.user); // Check if user is properly parsed
 
         next()
     }catch(error){

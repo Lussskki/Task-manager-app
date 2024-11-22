@@ -1,12 +1,11 @@
-// Inputed data schema from frontend
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
-const infoSchema = new mongoose.Schema({
-    field1: {
-        type: String,
-        required: true,
-    }
-})
+const InfoSchema = new mongoose.Schema({
+    field1: { type: String, required: true },
+    userId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' }, // Ensure this exists
+    // Add other fields as necessary
+});
 
-const Info = mongoose.model('Info', infoSchema)
-export default Info
+const Info = mongoose.model('Info', InfoSchema);
+
+export default Info;
