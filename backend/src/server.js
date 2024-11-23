@@ -15,10 +15,10 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 
 // Use environment variables for CORS configuration
-const allowedOrigin = process.env.FRONTEND_URL || PORT;
+const allowedOrigin = process.env.FRONTEND_URL || 'http://localhost:3001';
 const allowedMethods = process.env.ALLOWED_METHODS ? process.env.ALLOWED_METHODS.split(',') : ['GET', 'POST', 'DELETE'];
 
 
