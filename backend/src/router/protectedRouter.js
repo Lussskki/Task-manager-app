@@ -1,7 +1,7 @@
 import express from 'express';
 import authMiddleware from '../middleware/authMiddleware.js';
 import Info from '../db/schema/infoSchema.js';  // Import Info model
-import UserSchema from '../db/schema/userSchema.js';  // Import User model
+// import UserSchema from '../db/schema/userSchema.js';  // Import User model
 
 
 const protectedRouter = express.Router();
@@ -53,10 +53,10 @@ protectedRouter.delete('/:id', authMiddleware, async (req, res) => {
             return res.status(404).json({ message: 'Task not found.' });
         }
 
-        res.status(200).json({ message: 'Task deleted successfully', deletedTask: mongoDbData });
+        return  res.status(200).json({ message: 'Task deleted successfully', deletedTask: mongoDbData });
     } catch (error) {
         console.error('Error deleting task:', error);
-        res.status(500).json({ message: 'Server error.' });
+        return  res.status(500).json({ message: 'Server error.' });
     }
 });
 
