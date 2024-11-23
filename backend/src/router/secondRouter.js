@@ -3,10 +3,14 @@ import UserSchema from '../db/schema/userSchema.js'
 import express from 'express'
 
 import bcrypt from 'bcrypt'
+
 import { generateToken } from '../utils/jwtUtils.js'
+
 import dotenv from 'dotenv'
 dotenv.config()
-import mongoose from 'mongoose'
+
+
+
 const secondRouter = express.Router()
 
 
@@ -63,4 +67,6 @@ secondRouter.post('/', async (req, res) => {
 //         res.status(500).json({ message: 'Error fetching data', error });
 //     }
 // });
+
+
 export default secondRouter
