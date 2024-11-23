@@ -15,7 +15,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10000;
 
 // Use environment variables for CORS configuration
 const allowedOrigin = process.env.FRONTEND_URL || 'http://localhost:3001';
@@ -39,6 +39,6 @@ app.use('/api/addInfo', thirdRouter);
 app.use('/api/profile', protectedRouter);
 
 // Start the server
-app.listen(PORT, () => {
+app.listen(PORT,'0.0.0.0', () => {
     signale.success(`Server running on port ${PORT}`);
 });
