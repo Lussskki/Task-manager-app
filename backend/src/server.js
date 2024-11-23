@@ -1,19 +1,31 @@
 import express from 'express';
 import signale from 'signale';
+
 import './db/connectMongo.js';  // MongoDB connection
+
 import firstrouter from './router/firstRouter.js';
 import secondRouter from './router/secondRouter.js';
 import thirdRouter from './router/thirdRouter.js';
 import protectedRouter from './router/protectedRouter.js';
+
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
+import dotenv from 'dotenv'
+dotenv.config()
+
 const app = express();
+const PORT = process.env.PORT 
+
+// Use environment variables for CORS configuration
+const allowedOrigin = process.env.FRONTEND_URL || PORT;
+const allowedMethods = process.env.ALLOWED_METHODS ? process.env.ALLOWED_METHODS.split(',') : ['GET', 'POST', 'DELETE'];
+
 
 // CORS setup to allow frontend to access the API
 app.use(cors({
-    origin: 'http://localhost:3001', // React app is running on port 3001
-    methods: ['GET', 'POST', 'DELETE'],  
+    origin: allowedOrigin,
+    methods: allowedMethods
 }));
 
 // Middleware for parsing JSON bodies
@@ -27,6 +39,6 @@ app.use('/api/addInfo', thirdRouter);
 app.use('/api/profile', protectedRouter);
 
 // Start the server
-app.listen(3000, () => {
-    signale.success('Server running on port 3000');
+app.listen(PORT, () => {
+    signale.success(`Server running on port ${PORT}`);
 });
