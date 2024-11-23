@@ -1,8 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-// import './index.css';
+// import './index.css';  // Ensure your CSS is imported
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import * as serviceWorker from './serviceWorker';
+
+// Enable the service worker for caching and offline support
+serviceWorker.register();  
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
