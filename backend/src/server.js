@@ -1,5 +1,5 @@
 import express from 'express';
-import signale from 'signale';
+
 
 import './db/connectMongo.js';  // MongoDB connection
 
@@ -40,5 +40,5 @@ app.use('/api/profile', protectedRouter);
 
 // Start the server
 app.listen(PORT,'0.0.0.0', () => {
-    signale.success(`Server running on port ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
