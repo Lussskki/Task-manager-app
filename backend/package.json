@@ -1,14 +1,11 @@
 {
-  "name": "node.js",
+  "name": "backend",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"pnpm --prefix backend start\" \"pnpm --prefix frontend start\""
+    "start": "nodemon src/server.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.3",
@@ -21,10 +18,8 @@
     "nodemon": "^3.1.7",
     "signale": "^1.4.0"
   },
-  "type": "module",
   "devDependencies": {
     "concurrently": "^9.1.0"
-  }
-  
-  
+  },
+  "type": "module"
 }
