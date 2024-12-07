@@ -1,5 +1,5 @@
 import express from 'express';
-import signale from 'signale';
+
 
 import './db/connectMongo.js';  // MongoDB connection
 
@@ -18,7 +18,7 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Use environment variables for CORS configuration
-const allowedOrigin = process.env.FRONTEND_URL || PORT;
+const allowedOrigin = process.env.FRONTEND_URL || FRONTEND_URL;
 const allowedMethods = process.env.ALLOWED_METHODS ? process.env.ALLOWED_METHODS.split(',') : ['GET', 'POST', 'DELETE'];
 
 
@@ -39,6 +39,6 @@ app.use('/api/addInfo', thirdRouter);
 app.use('/api/profile', protectedRouter);
 
 // Start the server
-app.listen(PORT, () => {
-    signale.success(`Server running on port ${PORT}`);
+app.listen(PORT,'0.0.0.0', () => {
+    console.log(`Server running on port ${PORT}`);
 });
